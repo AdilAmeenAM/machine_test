@@ -1,4 +1,4 @@
-import 'package:product_api/core/feature/shopping_module/model/product_model.dart';
+import 'package:product_api/feature/shopping_module/model/product_model.dart';
 
 final class ProductBlocState {
   final List<Products> products;
@@ -6,7 +6,8 @@ final class ProductBlocState {
   final String? errorMessage;
   final List<Products> cartItems;
 
-  const ProductBlocState({required this.cartItems,
+  const ProductBlocState({
+    required this.cartItems,
     required this.products,
     this.isLoading = false,
     this.errorMessage,

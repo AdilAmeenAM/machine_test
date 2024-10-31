@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:product_api/core/feature/shopping_module/controller/bloc/product_bloc.dart';
-import 'package:product_api/core/feature/shopping_module/controller/bloc/product_bloc_events.dart';
-import 'package:product_api/core/feature/shopping_module/view/pages/product_list_page.dart';
+import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc.dart';
+import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc_events.dart';
+import 'package:product_api/feature/shopping_module/view/pages/product_list_page.dart';
 
 void main() {
   runApp(const MyApp());

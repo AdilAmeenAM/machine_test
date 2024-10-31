@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:product_api/core/feature/shopping_module/controller/bloc/product_bloc.dart';
-import 'package:product_api/core/feature/shopping_module/controller/bloc/product_bloc_events.dart';
-import 'package:product_api/core/feature/shopping_module/controller/bloc/product_bloc_state.dart';
+import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc.dart';
+import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc_events.dart';
+import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc_state.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
