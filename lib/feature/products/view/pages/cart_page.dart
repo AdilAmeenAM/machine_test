@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc.dart';
-import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc_events.dart';
-import 'package:product_api/feature/shopping_module/controller/bloc/product_bloc_state.dart';
+import 'package:product_api/feature/products/controller/bloc/product_bloc.dart';
+import 'package:product_api/feature/products/controller/bloc/product_bloc_events.dart';
+import 'package:product_api/feature/products/controller/bloc/product_bloc_state.dart';
+import 'package:product_api/feature/products/model/product_model.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    void removeProductFromCart(Product product) {
+      BlocProvider.of<ProductBloc>(context)
+          .add(RemoveFromCartEvent(product: product));
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Cart")),
       body: BlocBuilder<ProductBloc, ProductBlocState>(
@@ -27,10 +33,7 @@ class CartPage extends StatelessWidget {
                 subtitle: Text("Price: ${product.price}"),
                 trailing: IconButton(
                   icon: const Icon(Icons.remove_shopping_cart),
-                  onPressed: () {
-                    BlocProvider.of<ProductBloc>(context)
-                        .add(RemoveFromCartEvent(product: product));
-                  },
+                  onPressed: () => removeProductFromCart(product),
                 ),
               );
             },

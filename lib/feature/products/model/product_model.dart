@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class Products {
+class Product {
   final String id;
   final String name;
   final String description;
@@ -11,7 +11,7 @@ class Products {
   final String price;
   final String imageUrl;
 
-  Products({
+  Product({
     required this.id,
     required this.name,
     required this.description,
@@ -21,8 +21,8 @@ class Products {
     required this.imageUrl,
   });
 
-  factory Products.fromJson(Map<String, dynamic> json) {
-    return Products(
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
       id: json['id'],
       name: json['name'],
       description: json['description'] ?? 'No description available',
@@ -33,8 +33,22 @@ class Products {
     );
   }
 
-  // Static method to fetch products from the API
-  static Future<List<Products>> fetchProducts() async {
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'stock_status': stockStatus,
+      'quantity': quantity,
+      'price': price,
+      'thumb': imageUrl.replaceFirst('https://mansharcart.com/image/', ''),
+    };
+  }
+
+  /// Fetch products from the API
+  ///
+  /// Returns the products as a list
+  static Future<List<Product>> fetchProducts() async {
     const String url =
         'https://mansharcart.com/api/products/category/139/key/123456789';
     final response = await http.get(Uri.parse(url));
@@ -42,7 +56,7 @@ class Products {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return (data['products'] as List)
-          .map((json) => Products.fromJson(json))
+          .map((json) => Product.fromJson(json))
           .toList();
     } else {
       throw Exception('Failed to load products');

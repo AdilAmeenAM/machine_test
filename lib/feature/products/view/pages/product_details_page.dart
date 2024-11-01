@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:product_api/feature/shopping_module/model/product_model.dart';
+import 'package:product_api/feature/products/model/product_model.dart';
 
 class ProducDetailsPage extends StatelessWidget {
-  final Products product;
+  final Product product;
 
   const ProducDetailsPage({super.key, required this.product});
 
@@ -19,22 +19,28 @@ class ProducDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 24,
                 ),
-                Image.network(product.imageUrl),
+                Image.network(
+                  product.imageUrl,
+                  height: 350,
+                  width: 350,
+                  fit: BoxFit.cover,
+                ),
                 Text(product.name,
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold)),
-                Text("Price: ${product.price}"),
+                        fontSize: 30, fontWeight: FontWeight.bold)),
+                Text(
+                  "Price: ${product.price}",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Text("Stock Status: ${product.stockStatus}"),
                 Text("Quantity: ${product.quantity}"),
                 Text(product.description),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle add to cart functionality here
-                  },
-                  child: const Text("Add to Cart"),
-                ),
               ],
             ),
           ),
