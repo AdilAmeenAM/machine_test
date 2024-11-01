@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:product_api/feature/products/controller/bloc/product_bloc.dart';
+import 'package:product_api/feature/products/controller/bloc/product_bloc_events.dart';
 import 'package:product_api/feature/products/model/product_model.dart';
 
 class ProducDetailsPage extends StatelessWidget {
@@ -8,6 +11,12 @@ class ProducDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// A callback to execute when the user click add to cart button
+    void addToCartCallback() {
+      BlocProvider.of<ProductBloc>(context)
+          .add(AddToCartEvent(product: product));
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text(product.name)),
       body: SingleChildScrollView(
@@ -44,6 +53,11 @@ class ProducDetailsPage extends StatelessWidget {
                 Text("Stock Status: ${product.stockStatus}"),
                 Text("Quantity: ${product.quantity}"),
                 Text(product.description),
+                const SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: addToCartCallback,
+                  child: const Text("Add to Cart"),
+                ),
               ],
             ),
           ),

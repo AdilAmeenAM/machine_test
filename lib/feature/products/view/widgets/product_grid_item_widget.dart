@@ -14,7 +14,7 @@ class ProductGridItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Define the function for the ElevatedButton callback
+    /// A callback to execute when the user click add to cart button
     void addToCartCallback(Product product) {
       BlocProvider.of<ProductBloc>(context)
           .add(AddToCartEvent(product: product));
