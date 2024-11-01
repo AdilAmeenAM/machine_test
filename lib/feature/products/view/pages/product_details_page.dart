@@ -18,18 +18,21 @@ class ProducDetailsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 24,
+                const SizedBox(height: 24),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network(
+                    product.imageUrl,
+                    height: 350,
+                    width: 350,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                Image.network(
-                  product.imageUrl,
-                  height: 350,
-                  width: 350,
-                  fit: BoxFit.cover,
-                ),
+                const SizedBox(height: 24),
                 Text(product.name,
                     style: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 16),
                 Text(
                   "Price: ${product.price}",
                   style: const TextStyle(
