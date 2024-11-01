@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_api/feature/products/controller/bloc/product_bloc.dart';
-import 'package:product_api/feature/products/controller/bloc/product_bloc_events.dart';
 import 'package:product_api/feature/products/controller/bloc/product_bloc_state.dart';
-import 'package:product_api/feature/products/model/product_model.dart';
 import 'package:product_api/feature/products/view/pages/cart_page.dart';
 import 'package:product_api/feature/products/view/pages/product_details_page.dart';
+import 'package:product_api/feature/products/view/widgets/product_grid_item_widget.dart';
 
 class ProductListPage extends StatelessWidget {
   const ProductListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Define the function for the ElevatedButton callback
-    void addToCartCallback(Product product) {
-      // Access the current cart items from the ProductBloc state
-      final cartItems = BlocProvider.of<ProductBloc>(context).state.cartItems;
-
-      // Check if the product is already in the cart
-      if (cartItems.contains(product)) {
-        // If product is already in the cart, show snackbar message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("${product.name} is already in the cart!")),
-        );
-      } else {
-        // If product is not in the cart, add it and show confirmation
-        BlocProvider.of<ProductBloc>(context)
-            .add(AddToCartEvent(product: product));
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("${product.name} added to cart!")),
-        );
-      }
+    /// A callback to execute when the user click the cart button
+    void onCartBtnPressed() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CartPage()),
+      );
     }
 
     return Scaffold(
@@ -39,12 +25,7 @@ class ProductListPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CartPage()),
-              );
-            },
+            onPressed: onCartBtnPressed,
           ),
         ],
       ),
@@ -78,55 +59,7 @@ class ProductListPage extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Image.network(product.imageUrl),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            product.name,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            product.price,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            product.stockStatus,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () => addToCartCallback(product),
-                              child: const Text("Add to Cart"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: ProductGridItemWidget(product: product),
                   );
                 },
               );

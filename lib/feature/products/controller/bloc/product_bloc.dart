@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:product_api/feature/products/controller/bloc/product_bloc_events.dart';
 import 'package:product_api/feature/products/controller/bloc/product_bloc_state.dart';
 import 'package:product_api/feature/products/model/product_model.dart';
+import 'package:product_api/main.dart';
 
 final class ProductBloc extends Bloc<ProductBlocEvents, ProductBlocState> {
   static final _storage = GetStorage('cart');
@@ -61,6 +63,15 @@ final class ProductBloc extends Bloc<ProductBlocEvents, ProductBlocState> {
   }
 
   void _onAddToCart(AddToCartEvent event, Emitter<ProductBlocState> emit) {
+    /// Check if the product is already in the cart
+    if (state.cartItems.contains(event.product)) {
+      /// If product is already in the cart, show already exists message
+      App.scaffoldMessengerKey.currentState!.showSnackBar(SnackBar(
+          content:
+              Text("${event.product.name.trim()} is already in the cart!")));
+      return;
+    }
+
     final updatedCart = List<Product>.from(state.cartItems)..add(event.product);
 
     /// Update the cart details to the local storage
@@ -72,6 +83,10 @@ final class ProductBloc extends Bloc<ProductBlocEvents, ProductBlocState> {
       isLoading: state.isLoading,
       errorMessage: state.errorMessage,
     ));
+
+    // If product is not in the cart, add it and show confirmation
+    App.scaffoldMessengerKey.currentState!.showSnackBar(
+        SnackBar(content: Text("${event.product.name.trim()} added to cart!")));
   }
 
   void _onRemoveFromCart(

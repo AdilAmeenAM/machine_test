@@ -10,11 +10,13 @@ void main() async {
 
   await GetStorage.init('cart');
 
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  static final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => ProductBloc()..add(FetchProductsEvent()),
       child: MaterialApp(
+        scaffoldMessengerKey: scaffoldMessengerKey,
         debugShowCheckedModeBanner: false,
         title: 'Machine Test',
         theme: ThemeData(
