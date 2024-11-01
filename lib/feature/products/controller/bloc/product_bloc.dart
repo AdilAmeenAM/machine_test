@@ -64,7 +64,7 @@ final class ProductBloc extends Bloc<ProductBlocEvents, ProductBlocState> {
 
   void _onAddToCart(AddToCartEvent event, Emitter<ProductBlocState> emit) {
     /// Check if the product is already in the cart
-    if (state.cartItems.contains(event.product)) {
+    if (state.cartItems.any((product) => product.id == event.product.id)) {
       /// If product is already in the cart, show already exists message
       App.scaffoldMessengerKey.currentState!.showSnackBar(SnackBar(
           content:
